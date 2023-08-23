@@ -3,13 +3,70 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation';
 import Stories from './Components/stories';
+import imageUrls from "./utils/imageUrl"
+import React, { useEffect, useState } from 'react'
+
 function Home() {
 
   const router = useRouter()
+  const [data, setData] = useState([])
 
-  const detailPage = (id) => [
-    router.push(`./details`)
-  ]
+  const [postData, setpostData] = useState([])
+
+  const detailPage = (id) => {
+    console.log("first",id)
+    router.push(`./details`);
+      localStorage.setItem("id",id)
+  }
+
+  // Function to pick a random item from an array
+  function getRandomItem(arr) {
+    const randomIndex = Math.round(Math.random() * arr.length);
+    return arr[randomIndex];
+  }
+
+  const appId = "64e485d2185e41484a709b93";
+  const fetchData = async () => {
+    try {
+      const res = await fetch("https://dummyapi.io/data/v1/user?limit=300", {
+        headers: {
+          "app-id": appId,
+        }
+      }).then((resp) => { return resp.json() })
+      await setData(res?.data)
+    } catch (error) {
+
+    }
+  }
+  const fetchPostData = async () => {
+    try {
+      const res = await fetch("https://dummyapi.io/data/v1/post?limit=25", {
+        headers: {
+          "app-id": appId,
+        }
+      }).then((resp) => { return resp.json() })
+      await setpostData(res?.data)
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+    fetchPostData()
+    localStorage.clear()
+  }, [])
+
+
+  // Usage
+  const randomItem = getRandomItem(postData);
+
+  const shuffle = (array) => { 
+    return array.sort(() => Math.random() - 0.5); 
+}; 
+
+// Usage 
+const shuffledArray = shuffle(postData); 
 
   return (
     <div className="overflow-x-hidden">
@@ -24,23 +81,63 @@ function Home() {
       Contact
       </h1>
       </div> */}
-     <Stories navi={detailPage} />
-      <div className="flex flex-center m-2 p-5">
-        <article className="prose prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600">
-          <img className="w-64 h-64 object-cover" alt="test" src="http://www.kiklop.com.tr/uploads/article/1170x570/article-24.jpg" />
-          <h1>Garlic bread with cheese: What the science tells us</h1>
-          <p>
-            For years parents have espoused the health benefits of eating garlic bread with cheese to their
-            children, with the food earning such an iconic status in our culture that kids will often dress
-            up as warm, cheesy loaf for Halloween.
-          </p>
-          <p>
-            But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases
-            springing up around the country.
-          </p>
-        </article>
-      </div>
-
+      <Stories navi={detailPage} data={data} />
+      <div className="flex items-center flex-col flex-wrap gap-5 p-5 overflow-y-auto">
+        {shuffledArray && shuffledArray.map((items, index) => {
+          return (
+            <article key={index} className="prose prose-headings:underline prose-a:text-blue-600 rounded-md">
+              <div style={{    margin: "17px", height: "38px" }} className="prose prose-img:rounded-full flex flex-wrap gap-5">
+                <Image
+                   className="bg-red-800 transition ease-in delay-10 hover:-translate-y-1 hover:scale-110 hover:duration-300 hover:cursor-pointer"
+                   unoptimized
+                  src={items?.owner?.picture}
+                  loading='lazy'
+                  width={54}
+                  height={54}
+                  alt="Picture"
+                      //  onClick={()=>{detailPage(items.id)}}
+                />
+                <div className="-my-2">
+                  <p>{items.owner.firstName} {items.owner.lastName}</p>
+                   </div>
+              </div>
+              <Image
+                className="transition ease-in delay-10 hover:-translate-y-2 hover:scale-105 hover:duration-300 hover:cursor-pointer"
+                src={items?.image}
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  borderRadius:"10px"
+                }}
+                loading='lazy'
+                width={300}
+                height={300}
+                alt="Picture"
+              />
+              <h3 className='capitalize mx-1 -my-1'>{items?.text.substring(0, 25)}...</h3>
+              <div className='flex flex-nowrap'>
+                {items?.tags && items?.tags?.length > 0 && (
+                  items?.tags?.map((size, index) => {
+                    return (
+                      <p className='bg-blue-800 rounded-2xl px-2 mx-1 text-white max-w-xs' key={size}>
+                        {size}
+                      </p>
+                    )
+                  }))}
+              </div>
+                { <div className="flex -my-5" >
+         <Image src="/thumbs-up.svg" loading='lazy'
+         width={20}
+                  height={20}
+                  className='mx-2'
+          alt="likes"/>
+                {" "}
+                <span className='mt-7 px-2'>{items?.likes}</span>
+               </div>}
+            </article>
+          )
+        })}
+     </div>
     </div>
   )
 }
