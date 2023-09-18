@@ -1,14 +1,16 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation';
 
 const Detail = () => {
   const [url, setUrl] = useState();
   const [userId, setUserId] = useState()
-  const [data, setData]=useState()
+  const [data, setData] = useState()
+  const router =useParams()
  
   useEffect(() => {
-    const user= localStorage.getItem("id")
+    const user= router?.id
     setUserId(user)
   })
 
@@ -19,25 +21,29 @@ const Detail = () => {
 
   const appId = "64e485d2185e41484a709b93";
   
+
   const fetchData = async(id) => {
     try {
       const res = await fetch(`https://dummyapi.io/data/v1/user/${id}`, {
         headers: {
           "app-id": appId,
         }
-      }).then((resp)=>{return resp.json()})
+      }).then((resp) => { return resp.json() })
+      if (res.error == "RESOURCE_NOT_FOUND") {
+        setData();
+        fetchData1()
+      }
       await setData(res)
       await setUrl(res?.picture)
       } catch (error) {
-      
-    }
+      }
   }
 
-    
   useEffect(() => {
   userId && fetchData(userId)
   },[userId])
 
+  
   return (
     <div className="flex flex-col items-center p-5 relative">
       {!data ?<div className='flex relative'> <div className='w-16 animate-spin h-16 rounded-full bg-gradient-to-r from-white to-blue-800 relative'> <div className='absolute left-1 top-1 w-14 h-14 bg-pin rounded-full border-5'> </div> </div><span className='absolute mx-2 text-blue-800 text-xl left-16 top-4'> Loading...</span></div> : <article className="relative flex gap-10 flex-wrap prose prose-img:rounded-xl justify-center prose-headings:underline prose-a:text-blue-600 ">
@@ -72,8 +78,7 @@ const Detail = () => {
           <span>email: {data?.email}</span>
           <span>Phone: {data?.phone}</span>
           <span>Registered on: {data?.registerDate}</span>
-          <span>location: {data?.location?.street} {data?.location?.city}, {data?.location?.state}</span>
-                         
+          <span>location: {data?.location?.street} {data?.location?.city}, {data?.location?.state}</span>                         
         </div>}
       </article>}
      </div>

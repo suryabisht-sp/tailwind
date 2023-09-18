@@ -14,11 +14,12 @@ function Home() {
   const [postData, setpostData] = useState([])
 
   const detailPage = (id) => {
-    console.log("first",id)
-    router.push(`./details`);
-      localStorage.setItem("id",id)
+    router.push(`./details/${id}`);
   }
 
+  const postDetail = (id) => {
+    router.push(`./postdetails/${id}`);
+  }
   // Function to pick a random item from an array
   function getRandomItem(arr) {
     const randomIndex = Math.round(Math.random() * arr.length);
@@ -26,6 +27,7 @@ function Home() {
   }
 
   const appId = "64e485d2185e41484a709b93";
+ 
   const fetchData = async () => {
     try {
       const res = await fetch("https://dummyapi.io/data/v1/user?limit=300", {
@@ -40,14 +42,13 @@ function Home() {
   }
   const fetchPostData = async () => {
     try {
-      const res = await fetch("https://dummyapi.io/data/v1/post?limit=25", {
+      const res = await fetch("https://dummyapi.io/data/v1/post?limit=10", {
         headers: {
           "app-id": appId,
         }
       }).then((resp) => { return resp.json() })
       await setpostData(res?.data)
     } catch (error) {
-
     }
   }
 
@@ -95,7 +96,7 @@ const shuffledArray = shuffle(postData);
                   width={54}
                   height={54}
                   alt="Picture"
-                      //  onClick={()=>{detailPage(items.id)}}
+                  onClick={()=>{postDetail(items.id)}}
                 />
                 <div className="-my-2">
                   <p>{items.owner.firstName} {items.owner.lastName}</p>
@@ -113,6 +114,7 @@ const shuffledArray = shuffle(postData);
                 width={300}
                 height={300}
                 alt="Picture"
+                 onClick={()=>{postDetail(items.id)}}
               />
               <h3 className='capitalize mx-1 -my-1'>{items?.text.substring(0, 25)}...</h3>
               <div className='flex flex-nowrap'>

@@ -57,3 +57,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background:  rgb(190 24 93 );
 }
+
+
+/** Hide the `details` chevron icon in Firefox Browsers */
+summary {
+    list-style-type: none;
+}
+
+/** Hide the `details` chevron icon in Safari Browsers */
+summary::-webkit-details-marker {
+    display: none;
+}
+
+.text-position{
+    text-align: center;
+    color: #b74491;
+    position: absolute;
+    top: 20%;
+    right: 32%;
+    transform: translate(0px, -50px);  
+    filter: drop-shadow(15px 14px 11px blue);
+}

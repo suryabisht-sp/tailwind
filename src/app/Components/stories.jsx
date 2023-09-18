@@ -4,14 +4,13 @@ import imageUrls from '../utils/imageUrl'
 const Stories = ({ navi, data }) => {
   
   const detailPage = (url, id) => {
-    localStorage.setItem("url", url)
-    localStorage.setItem("id",id)
     navi(id);
   }
 
   return (
      <div className="grid grid-col-8 overflow-x-auto sm:flex flex-wrap " >
-        {/* <div className="text-center text-red-500 shadow-lg shadow-pink-800 pt-2"><p className="text-2xl text-center shadow animate-bounce">Stories</p></div>  */}
+      {/* <div className="text-center text-red-500 shadow-lg shadow-pink-800 pt-2 m-1">
+        <p className="text-2xl text-center shadow animate-bounce p-1">Stories</p></div>  */}
         <div className="container mx-5 flex p-5 ">
           {data && data.map((items, index) => {
             return (
