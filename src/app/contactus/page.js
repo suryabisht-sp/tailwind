@@ -1,36 +1,36 @@
 
 const ContactUs = () => {
   return (
-       <div class="antialiased text-gray-900 px-6 border-2">
-      <div class="max-w-xl mx-auto py-12 divide-y md:max-w-4xl">
-        <div class="py-8">
-          <h1 class="text-4xl font-bold">Contact Form</h1>
-          <p class="mt-2 text-lg text-gray-600">
+       <div className="antialiased text-gray-900 px-6 border-2">
+      <div className="max-w-xl mx-auto py-12 divide-y md:max-w-4xl">
+        <div className="py-8">
+          <h1 className="text-4xl font-bold">Contact Form</h1>
+          <p className="mt-2 text-lg text-gray-600">
             An opinionated form to provide better solution within time.
           </p>
-          <div class="mt-4 flex space-x-4">
-            <a class="text-lg underline" href="/"
+          <div className="mt-4 flex space-x-4">
+            <a className="text-lg underline" href="/"
               >Phone</a
             >
-            <a class="text-lg underline" href="/">Chat</a>
+            <a className="text-lg underline" href="/">Chat</a>
           </div>
         </div>
-        <div class="py-12">
-          <h2 class="text-2xl font-bold">Contact Form</h2>
-          <p class="mt-2 text-lg text-gray-600">Please fill the below form</p>
-          <div class="mt-8 max-w-md">
-            <div class="grid grid-cols-1 gap-6">
-              <label class="block">
-                <span class="text-gray-700">Full name</span>
-                <input type="text" class="mt-1 block w-full" placeholder="" />
+        <div className="py-12">
+          <h2 className="text-2xl font-bold">Contact Form</h2>
+          <p className="mt-2 text-lg text-gray-600">Please fill the below form</p>
+          <div className="mt-8 max-w-md">
+            <div className="grid grid-cols-1 gap-6">
+              <label className="block">
+                <span className="text-gray-700">Full name</span>
+                <input type="text" className="mt-1 block w-full" placeholder="" />
               </label>
-              <label class="block">
-                <span class="text-gray-700">Email address</span>
-                <input type="email"  required class="mt-1 block w-full" placeholder="john@example.com" />
+              <label className="block">
+                <span className="text-gray-700">Email address</span>
+                <input type="email"  required className="mt-1 block w-full" placeholder="john@example.com" />
               </label>
-              <label class="block">
-                <span class="text-gray-700">What type of issue is it?</span>
-                <select class="block w-full mt-1">
+              <label className="block">
+                <span className="text-gray-700">What type of issue is it?</span>
+                <select className="block w-full mt-1">
                   <option>Account</option>
                   <option>Subcription</option>
                   <option>Profile</option>
@@ -39,16 +39,16 @@ const ContactUs = () => {
                         <option>Report</option>
                 </select>
               </label>
-              <label class="block">
-                <span class="text-gray-700">Additional Information</span>
-                <textarea class="mt-1 block w-full" rows="3"></textarea>
+              <label className="block">
+                <span className="text-gray-700">Additional Information</span>
+                <textarea className="mt-1 block w-full" rows="3"></textarea>
               </label>
-              <div class="block">
-                <div class="mt-2">
+              <div className="block">
+                <div className="mt-2">
                   <div>
-                    <label class="inline-flex items-center">
+                    <label className="inline-flex items-center">
                       <input type="checkbox"/>
-                      <span class="ml-2">Email me a copy of the submitted form</span>
+                      <span className="ml-2">Email me a copy of the submitted form</span>
                     </label>
                   </div>
                 </div>

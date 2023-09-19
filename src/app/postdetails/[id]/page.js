@@ -65,7 +65,7 @@ const PostDetail = () => {
             alt="Picture"
           />}
         </div>
-        {show && <div className="flex absolute overflow-auto gap-2" style={{top:"66%", left:"48%"}} >
+        {show && <div className="flex absolute overflow-auto gap-2" style={{top:"66%", left:"48%"}} >0
          <Image src="/thumbs-up.svg" loading='lazy'
          width={20}
             height={20}

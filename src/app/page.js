@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Stories from './Components/stories';
 import imageUrls from "./utils/imageUrl"
 import React, { useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast';
 
 function Home() {
 
@@ -68,10 +69,9 @@ function Home() {
 
 // Usage 
 const shuffledArray = shuffle(postData); 
-
   return (
     <div className="overflow-x-hidden">
-      {/* <div className="md:grid grid-cols-5 gap-2">
+    {/* <div className="md:grid grid-cols-5 gap-2">
     <h1 className="basis-4/12 md:bg-green-500 col-start-3 text-3xl rounded-lg p-2 text-orange-500">
       Logo
       </h1>
@@ -83,6 +83,7 @@ const shuffledArray = shuffle(postData);
       </h1>
       </div> */}
       <Stories navi={detailPage} data={data} />
+      <Toaster/>
       <div className="flex items-center flex-col flex-wrap gap-5 p-5 overflow-y-auto">
         {shuffledArray && shuffledArray.map((items, index) => {
           return (
