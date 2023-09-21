@@ -6,6 +6,7 @@ import Stories from './Components/stories';
 import imageUrls from "./utils/imageUrl"
 import React, { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast';
+import Footer from './Components/footer';
 
 function Home() {
 
@@ -29,9 +30,10 @@ function Home() {
 
   const appId = "64e485d2185e41484a709b93";
  
+  //stories
   const fetchData = async () => {
     try {
-      const res = await fetch("https://dummyapi.io/data/v1/user?limit=300", {
+      const res = await fetch("https://dummyapi.io/data/v1/user?limit=20", {
         headers: {
           "app-id": appId,
         }
@@ -43,7 +45,7 @@ function Home() {
   }
   const fetchPostData = async () => {
     try {
-      const res = await fetch("https://dummyapi.io/data/v1/post?limit=10", {
+      const res = await fetch("https://dummyapi.io/data/v1/post?limit=5", {
         headers: {
           "app-id": appId,
         }
@@ -84,7 +86,7 @@ const shuffledArray = shuffle(postData);
       </div> */}
       <Stories navi={detailPage} data={data} />
       <Toaster/>
-      <div className="flex items-center flex-col flex-wrap gap-5 p-5 overflow-y-auto">
+      <div className="flex items-center flex-col flex-wrap gap-5 p-5 overflow-y-auto mb-6">
         {shuffledArray && shuffledArray.map((items, index) => {
           return (
             <article key={index} className="prose prose-headings:underline prose-a:text-blue-600 rounded-md">
@@ -140,7 +142,47 @@ const shuffledArray = shuffle(postData);
             </article>
           )
         })}
-     </div>
+      </div>
+
+<div className='mb-4'>
+<nav aria-label="Page navigation example relative">
+  <ul class="flex items-center -space-x-px h-10 relative left-16 sm:ml-10 sm:inset-x-1/3 text-base">
+    <li>
+      <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        <span class="sr-only">Previous</span>
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+    </li>
+    <li>
+      <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+    </li>
+    <li>
+      <a href="#" aria-current="page" class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+    </li>
+    <li>
+      <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+    </li>
+    <li>
+      <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+    </li>
+    <li>
+      <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        <span class="sr-only">Next</span>
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+        </svg>
+      </a>
+    </li>
+  </ul>
+        </nav>
+        </div>
+
+      <Footer/>
     </div>
   )
 }

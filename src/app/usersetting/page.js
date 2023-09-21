@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 const Settings = () => {
   const [show, setShow] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const router=useRouter
+  const router=useRouter()
   const showEditBio = () => {
     setShow(!show)
   }
@@ -39,6 +39,9 @@ const Settings = () => {
         setPassword(false)
     }
   
+  const handlesubscription=() => {
+    router.push("./subscription")
+  }
 
   return (
     <div className="relative" >
@@ -51,7 +54,7 @@ const Settings = () => {
             data-modal-target="popup-modal" data-modal-toggle="popup-modal" onClick={()=>{handleModal()}}>Change Password</span>
           <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer" onClick={()=>{handleEmail()}}>Change Email</span>
           <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer">Read Agreement</span>
-          <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer">Payment and subscription</span>
+          <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer" onClick={()=>{handlesubscription()}}>Payment and subscription</span>
           <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer">About</span>
           <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer">Help and Support</span>
           <span className="bg-red-100 p-4 rounded-md hover:bg-red-300 hover:text-white hover:cursor-pointer" onClick={() => { handleDel() }}>Deactivate</span>

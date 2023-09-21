@@ -1,21 +1,28 @@
+"use client"
+
+import { useState } from "react"
+import PopupChat from "../Components/popupchat"
 
 const ContactUs = () => {
+  const[showchat, setShowChat]=useState(false)
+  const handlesupportChat = () => {
+    setShowChat(true)
+  }
   return (
        <div className="antialiased text-gray-900 px-6 border-2">
       <div className="max-w-xl mx-auto py-12 divide-y md:max-w-4xl">
-        <div className="py-8">
+        <div className="py-6">
           <h1 className="text-4xl font-bold">Contact Form</h1>
           <p className="mt-2 text-lg text-gray-600">
             An opinionated form to provide better solution within time.
           </p>
           <div className="mt-4 flex space-x-4">
-            <a className="text-lg underline" href="/"
-              >Phone</a
-            >
-            <a className="text-lg underline" href="/">Chat</a>
+            <a className="text-lg underline cursor-pointer" href="/"
+              >Phone </a>
+            <a className="text-lg underline cursor-pointer" onClick={()=>{handlesupportChat()}}>Chat</a>
           </div>
         </div>
-        <div className="py-12">
+        <div className="py-6">
           <h2 className="text-2xl font-bold">Contact Form</h2>
           <p className="mt-2 text-lg text-gray-600">Please fill the below form</p>
           <div className="mt-8 max-w-md">
@@ -58,7 +65,7 @@ const ContactUs = () => {
           </div>
         </div>
        </div>
-   
+   {showchat && <PopupChat/>}
     </div>
   )
 }
