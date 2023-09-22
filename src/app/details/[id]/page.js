@@ -71,7 +71,7 @@ const Detail = () => {
        alt="likes"      
             src="/thumbs-down.svg" />
               </div>} */}
-        {<div className='grid'>
+        {<div className='grid justify-items-center'>
           <span className='uppercase font-bold'>Name: {data?.title} {data?.firstName}-{data?.lastName} </span>
           <span>Gender: {data?.gender}</span>
           <span>DOB: {data?.dateOfBirth}</span>

@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import Footer from './Components/footer';
 
 function Home() {
+  
 
   const router = useRouter()
   const [data, setData] = useState([])
@@ -89,7 +90,8 @@ const shuffledArray = shuffle(postData);
       <div className="flex items-center flex-col flex-wrap gap-5 p-5 overflow-y-auto mb-6">
         {shuffledArray && shuffledArray.map((items, index) => {
           return (
-            <article key={index} className="prose prose-headings:underline prose-a:text-blue-600 rounded-md">
+            <div className='back-main '>
+            <article key={index} className="hover:text-white moving-border flex flex-col items-center w-full border-2 m-2 p-2 hover:drop-shadow-xl border-white prose prose-headings:underline prose-a:text-blue-600 rounded-md">
               <div style={{    margin: "17px", height: "38px" }} className="prose prose-img:rounded-full flex flex-wrap gap-5">
                 <Image
                    className="bg-red-800 transition ease-in delay-10 hover:-translate-y-1 hover:scale-110 hover:duration-300 hover:cursor-pointer"
@@ -140,6 +142,7 @@ const shuffledArray = shuffle(postData);
                 <span className='mt-7 px-2'>{items?.likes}</span>
                </div>}
             </article>
+              </div>
           )
         })}
       </div>

@@ -86,3 +86,47 @@ summary::-webkit-details-marker {
     width:50px
   }
 }
+
+.back-main{
+     width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background: linear-gradient(177deg, #d8728491, #828acbab);
+    border-radius: 8px;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.moving-border {  
+  border-radius: 8px;
+  position: relative;
+  background: #eab9b9;
+  padding: 4px;
+}
+.moving-border::before,
+.moving-border::after {
+  content: "";
+   border-radius: 8px;
+  position: absolute;
+  inset: -0.2rem;
+  z-index: -1;
+  background: linear-gradient(var(--angle), 
+    #0b468e,  #4a9eb6, rgb(221, 135, 135));
+  animation: rotate 15s linear infinite;
+}
+.moving-border::after {
+  filter: blur(5px);
+   border-radius: 8px;
+}
+@keyframes rotate {
+  0%     { --angle: 0deg; }
+  100%   { --angle: 360deg;
+  }
+}
