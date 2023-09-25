@@ -4,12 +4,13 @@ import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../redux/features/auth-slice'
+import { loggedUser, logout } from '../redux/features/auth-slice'
 
 const Navbar = () => {
   const router = useRouter()
-  const dispatch=useDispatch()
-  const userName = useSelector((state) => state.authReducer.values.userName)
+  const dispatch = useDispatch()
+  const [signedUser, setSignedUser]=useState()
+  const userName = useSelector((state) => state.authReducer.values)
  
    const goHome = () => {
     router.push(`/`)
@@ -48,11 +49,23 @@ const Navbar = () => {
   const handleLogout = (e) => {
     e.preventDefault()
     dispatch(logout())
+   
   }
 
   const handleLogin = () => {
     router.push("./login")
   }
+
+  const[randomNumber, setRandomNumber]=useState(0)
+  useEffect(() => {
+    const data = JSON.parse(sessionStorage.getItem("values"))
+    if (data && data?.email) {
+      setSignedUser(data?.email)
+      dispatch(loggedUser(data?.email))
+     const randomNumber1 = Math.random() * 100
+      setRandomNumber(Math.round(randomNumber1))
+     }
+  },[router])
 
   return (
     <div>
@@ -77,7 +90,7 @@ const Navbar = () => {
          <h4 className="sm:flex basis-4/12 text-white hover:underline mt-4 hover:cursor-pointer" onClick={() => { faq() }}>
           FAQ
         </h4>
-        {!userName &&  <h4 className="sm:flex basis-4/12 text-white hover:underline mt-4 hover:cursor-pointer" onClick={() => { handleLogin() }}>
+        {!userName?.userName &&  <h4 className="sm:flex basis-4/12 text-white hover:underline mt-4 hover:cursor-pointer" onClick={() => { handleLogin() }}>
           Login
         </h4>}
         <form className='relative sm:contents left-1/3 w-1/3 rounded-md pr-2 ml-1 w-1/3'>
@@ -88,13 +101,14 @@ const Navbar = () => {
               focus:border-blue-500 focus:bg-pink-700 focus:text-white sm:px-2 bg-pink-800" required />
           </div>
         </form>
-        {userName && <a onClick={()=>{handleChat()}} className="border-dotted transition duration-500 border-2 hover:border-2 hover:border-solid hover:border-blue-500 h-10 mt-2 mr-2 cursor-pointer flex items-center w-20 relative inset-x-1/3 ml-6 sm:left-0 p-2 text-gray-900 rounded-lg group">
+        {userName?.userName &&
+          <a onClick={() => { handleChat() }} className="border-dotted transition duration-500 border-2 hover:border-2 hover:border-solid hover:border-blue-500 h-10 mt-2 mr-2 cursor-pointer flex items-center w-20 relative inset-x-1/3 ml-6 sm:left-0 p-2 text-gray-900 rounded-lg group">
                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white cursor-pointer dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z"/>
                </svg>
-              <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">3</span>
+            <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">{randomNumber }</span>
             </a>}
-        {userName && <details x-data x-ref="dropdown" className="relative inline-block text-left z-10 mt-1 mr-2">
+        {userName?.userName && <details x-data x-ref="dropdown" className="relative inline-block text-left z-10 mt-1 mr-2">
           <summary>
             <img src="/defa.jpg" loading='lazy'
               width="112px"
@@ -104,7 +118,7 @@ const Navbar = () => {
           </summary>
           <details-menu role="menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1" role="none">
-              <a className="block px-4 py-2 text-sm text-blue-700 hover:bg-gray-100 hover:text-blue-900" role="menuitem">Signed in as Guest@gmail.com</a>
+              <a className="block px-4 py-2 text-sm text-blue-700 hover:bg-gray-100 hover:text-blue-900" role="menuitem">Signed in as {userName && userName.userName }</a>
               <a className="block hover:cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" onClick={() => {
                 profile()
               }}>Your Account</a>
@@ -117,7 +131,7 @@ const Navbar = () => {
                 </button>
                 <a className=" hover:cursor-pointer block mx-1 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
                   <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-                  <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                  <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{randomNumber && randomNumber}</span>
                 </a>
               </form>
             </div>

@@ -70,8 +70,24 @@ function Home() {
     return array.sort(() => Math.random() - 0.5); 
 }; 
 
+  const [test, setTest] = useState(false)
+  const [id,setId]=useState()
+
+  const mouseEnter = (id) => {
+    setTest(true)
+    setId(id)
+  }
+   const mouseLeave = () => {
+     setTest(false)
+     setId(id)
+  }
+
+  console.log("tes", test)
+  
 // Usage 
-const shuffledArray = shuffle(postData); 
+  // const shuffledArray = shuffle(postData); 
+  const shuffledArray = postData
+
   return (
     <div className="overflow-x-hidden">
     {/* <div className="md:grid grid-cols-5 gap-2">
@@ -90,9 +106,14 @@ const shuffledArray = shuffle(postData);
       <div className="flex items-center flex-col flex-wrap gap-5 p-5 overflow-y-auto mb-6">
         {shuffledArray && shuffledArray.map((items, index) => {
           return (
-            <div className='back-main '>
-            <article key={index} className="hover:text-white moving-border flex flex-col items-center w-full border-2 m-2 p-2 hover:drop-shadow-xl border-white prose prose-headings:underline prose-a:text-blue-600 rounded-md">
-              <div style={{    margin: "17px", height: "38px" }} className="prose prose-img:rounded-full flex flex-wrap gap-5">
+            <div className='back-main' key={items?.id} >
+              <article
+                onMouseEnter={() => {items?.id && mouseEnter(items.id)}}
+                onMouseLeave={()=>{mouseLeave(items.id)}}
+                key={items.id} className={test && id === items.id  ? 
+                  "hover:text-white moving-border flex flex-col w-full border-2 m-2 p-2 hover:drop-shadow-xl border-white prose prose-headings:underline prose-a:text-blue-600 rounded-md" :
+                  "hover:text-white moving-border flex flex-col items-center w-full border-2 m-2 p-2 hover:drop-shadow-xl border-white prose prose-headings:underline prose-a:text-blue-600 rounded-md"}>
+                <div style={{ margin: "17px", height: "38px" }} className="prose prose-img:rounded-full flex flex-wrap gap-5">
                 <Image
                    className="bg-red-800 transition ease-in delay-10 hover:-translate-y-1 hover:scale-110 hover:duration-300 hover:cursor-pointer"
                    unoptimized
@@ -106,7 +127,9 @@ const shuffledArray = shuffle(postData);
                 <div className="-my-2">
                   <p>{items.owner.firstName} {items.owner.lastName}</p>
                    </div>
-              </div>
+                </div>
+                {items.id === id && test && <div className='relative left-2/3 flex'>
+                <h3>Details user</h3></div>}
               <Image
                 className="transition ease-in delay-10 hover:-translate-y-2 hover:scale-105 hover:duration-300 hover:cursor-pointer"
                 src={items?.image}
@@ -142,6 +165,7 @@ const shuffledArray = shuffle(postData);
                 <span className='mt-7 px-2'>{items?.likes}</span>
                </div>}
             </article>
+            
               </div>
           )
         })}
@@ -154,7 +178,7 @@ const shuffledArray = shuffle(postData);
       <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
         <span class="sr-only">Previous</span>
         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
         </svg>
       </a>
     </li>
@@ -177,7 +201,7 @@ const shuffledArray = shuffle(postData);
       <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
         <span class="sr-only">Next</span>
         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
         </svg>
       </a>
     </li>

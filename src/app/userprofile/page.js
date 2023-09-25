@@ -2,9 +2,12 @@
 import Image from "next/image"
 import { useState } from "react"
 import Editform from "../Components/editform"
+import { useSelector } from "react-redux"
 
 const Profile = () => {
   const [show, setShow] = useState(false)
+    const userName = useSelector((state) => state.authReducer.values)
+
   const showEditBio = () => {
     setShow(!show)
   }
@@ -14,8 +17,8 @@ const Profile = () => {
         <div><h1 className="p-5">Profile</h1></div>
         <Image className="w-24 rounded-full h-24 top-20 m-5" src="/defa.jpg" width={60} height={60} alt="Picture" />
         <span className="p-5">Bio</span>
-        <p className="text-red-800 m-5">Name: Guest</p>
-        <p className="text-red-800 m-5">Email: Guest@gmail.com</p>
+        <p className="text-red-800 m-5">Name: {userName?.userName}</p>
+        <p className="text-red-800 m-5">Email: {userName?.userName}</p>
         <p className="text-red-800 m-5">Contact: +1-7500000000</p>
         <p className="text-red-800 m-5">Address: 562/5 Baltimore</p>
         <p className="text-red-800 m-5">Pin: 432100</p>

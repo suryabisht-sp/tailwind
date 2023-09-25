@@ -20,7 +20,7 @@ const FAQ = () => {
                                 <div className="flex-auto">Wondering how our service works ?</div>
                                 <div className="px-2 mt-1">
                                     <div style={{}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-down w-5 h-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-down w-5 h-5">
                                             <polyline points="6 9 12 15 18 9"></polyline>
                                         </svg>
                                     </div>
@@ -32,7 +32,7 @@ const FAQ = () => {
                                 <div className="flex-auto">How to deactivate your account ?</div>
                                 <div className="px-2 mt-1">
                                     <div style={{}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-down w-5 h-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-down w-5 h-5">
                                             <polyline points="6 9 12 15 18 9"></polyline>
                                         </svg>
                                     </div>
@@ -44,7 +44,7 @@ const FAQ = () => {
                                 <div className="flex-auto">How ads work in the profile ?</div>
                                 <div className="px-2 mt-1">
                                     <div style={{}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-up w-5 h-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-up w-5 h-5">
                                             <polyline points="18 15 12 9 6 15"></polyline>
                                         </svg>
                                     </div>
@@ -57,7 +57,7 @@ const FAQ = () => {
                                 <div className="flex-auto"> how to cancel the subscription ?</div>
                                 <div className="px-2 mt-1">
                                     <div style={{}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-down w-5 h-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-down w-5 h-5">
                                             <polyline points="6 9 12 15 18 9"></polyline>
                                         </svg>
                                     </div>
@@ -69,7 +69,7 @@ const FAQ = () => {
                                 <div className="flex-auto">How to update the bio and settings ?</div>
                                 <div className="px-2 mt-1">
                                     <div style={{}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-down w-5 h-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-down w-5 h-5">
                                             <polyline points="6 9 12 15 18 9"></polyline>
                                         </svg>
                                     </div>
@@ -81,7 +81,7 @@ const FAQ = () => {
                                 <div className="flex-auto">What are new privacy policies ?</div>
                                 <div className="px-2 mt-1">
                                     <div style={{}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-chevron-down w-5 h-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-chevron-down w-5 h-5">
                                             <polyline points="6 9 12 15 18 9"></polyline>
                                         </svg>
                                     </div>

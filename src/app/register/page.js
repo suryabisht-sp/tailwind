@@ -1,12 +1,103 @@
 "use client"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import RegisterApi from '../api/register'
+import registerApi from '../api/register'
+import { login, signup } from '../redux/features/auth-slice'
+import toast from 'react-hot-toast'
 
 const Register = () => {
+  const [values, setValues]=useState()
   const router = useRouter()
+  const dispatch=useDispatch()
+
   const handleLogin = () => {
     router.push("./login")
+  }
+  
+  const handleChange = (e) => {
+    e.preventDefault();
+  const { name, value } = e.target;
+  setValues((prevValues) => ({
+    ...prevValues,
+    [name]: value,
+  }));
+}
+
+  const handleSignup = async (e) => {
+    e.preventDefault()
+
+  if (!values || !values.user || !values.email || !values.phone || !values.password) {
+    toast.error("Please fill in all fields.");
+    return;
+  }
+    
+    const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Usage
+if (!validateEmail(values.email)) {
+  toast.error("Please enter a valid email address.");
+  return;
+}
+
+    const validatePhoneNumber = (phone) => {
+  const phoneRegex = /^\d{10}$/; // Assumes a 10-digit phone number
+  return phoneRegex.test(phone);
+};
+
+// Usage
+if (!validatePhoneNumber(values.phone)) {
+  toast.error("Please enter a valid 10-digit phone number.");
+  return;
+}
+
+    const validatePassword = (password) => {
+  const minLength = 8;
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  return password.length >= minLength && hasLetter && hasNumber;
+};
+
+// Usage
+if (!validatePassword(values.password)) {
+  toast.error("Password must be at least 8 characters long and include both letters and numbers.");
+  return;
+}
+    
+    const validateUsername = (username) => {
+  const hasNumbers = /\d/.test(username);
+  return !hasNumbers;
+};
+
+// Usage
+if (!validateUsername(values.user)) {
+  toast.error("Username must not contain numbers.");
+  return;
+}
+
+
+    const data = {
+      user:values.user,
+      email: values.email,
+      phone: values.phone,
+      password: values.password
+}
+    const data1 = await registerApi(data)
+    if (data1.message === "User registered successfully") {
+      dispatch(signup(data1))
+      dispatch(login(data1))
+      router.push("/")    
+      setValues()
+    }
+  }
+  const [textchanger, setTextchanger] = useState(false)
+ const handleTextchanger = () => {
+    setTextchanger(!textchanger)
   }
   return (
     <div>
@@ -14,16 +105,26 @@ const Register = () => {
   <div className="bg-gray-100 flex rounded-2xl h-1/2 shadow-lg max-w-3xl p-5 items-center">
    <div className="px-8 md:px-16">
       <h2 className="font-bold text-2xl text-[#002D74]">Register</h2>
-       <form action="" className="flex flex-col gap-4">
-        <input className="p-2 mt-8 rounded-xl border" type="email" autoComplete="off" name="email" placeholder="Email"/>
+       <form className="flex flex-col gap-4">
+              <input className="p-2 mt-8 rounded-xl border" type="text" autoComplete="off" name="user" placeholder="UserName" onChange={(e) => {
+                handleChange(e)
+              }} />
+                 <input className="p-2 rounded-xl border" type="email" autoComplete="off" name="email" placeholder="Email" onChange={(e) => {
+                handleChange(e)
+              }} />
+                 <input className="p-2 rounded-xl border" type="pasword" autoComplete="off"name="phone" placeholder="Mobile number" maxLength={10} onChange={(e) => {handleChange(e)}}/>
         <div className="relative">
-          <input className="p-2 rounded-xl border w-full" type="password" autoComplete="off" name="password" placeholder="Password"/>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" viewBox="0 0 16 16">
-            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-          </svg>
+                <input className="p-2 rounded-xl border w-full" type={ textchanger? "text": "password"}  autoComplete="off" name="password" placeholder="Password" onChange={(e) => {handleChange(e)}}/>
+                {textchanger ? <svg onClick={() => { handleTextchanger() }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" className="hover:cursor-pointer bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                </svg> : <svg onClick={() => { handleTextchanger() }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" className="hover:cursor-pointer bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                </svg>}
         </div>
-        <button className="bg-blue-700 rounded-xl text-white py-2 hover:scale-105 duration-300">Signup</button>
+              <button className="bg-blue-700 rounded-xl text-white py-2 hover:scale-105 duration-300" onClick={(e) => {
+                handleSignup(e)
+        }}>Signup</button>
       </form>
 
       <div className="mt-6 grid grid-cols-3 items-center text-gray-400">

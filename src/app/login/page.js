@@ -2,13 +2,17 @@
 "use client"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React from 'react'
-import { login, logout } from '../redux/features/auth-slice'
+import React, { useState } from 'react'
+import { loggedUser, login, logout } from '../redux/features/auth-slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSession } from 'next-auth/react'
+import loginApi from '../api/login'
+import toast from 'react-hot-toast'
+
 const Login = () => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const [values, setValues] = useState()
   const userName = useSelector((state) => state.authReducer.values.userName)
   if (userName) {
     return router.push("./")
@@ -23,12 +27,41 @@ const Login = () => {
     router.push("./forgetpassword")
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    dispatch(login("surya"))
-    sessionStorage.setItem("user", "surya")
-  }
+     if (!values || !values.email || !values.password) {
+    // If either email or password is missing, show an error message
+    toast.error("Please enter both email and password.")
+    return;
+     }
+   
+    const data = {
+     email: values.email,
+     password: values.password
+    }
+    const data1 = await loginApi(data)
+    if (data1.message === "Login successful") {
+     sessionStorage.setItem("values",JSON.stringify(values))
+      dispatch(login(data1))
+      dispatch(loggedUser(values.email))
+      const emailInput = document.querySelector('input[name="email"]');
+     const passwordInput = document.querySelector('input[name="password"]');
+    
+  emailInput ? emailInput.value = '':"";
+ passwordInput ? passwordInput.value = '':" ";
+      router.push("/")    
+    }
+    }
 
+  const handleChange = (e) => {
+        e.preventDefault();
+  const { name, value } = e.target;
+  setValues((prevValues) => ({
+    ...prevValues,
+    [name]: value,
+  }));
+  }
+  
   return (
     <div>
       <section className="bg-pink-100 min-h-screen flex items-center justify-center">
@@ -36,9 +69,9 @@ const Login = () => {
         <div className="px-8 md:px-16">
           <h2 className="font-bold text-2xl text-[#002D74]">Login</h2>
           <form action="" className="flex flex-col gap-4">
-            <input className="p-2 mt-8 rounded-xl border" type="email" name="email" autoComplete="off" placeholder="Email" />
+            <input className="p-2 mt-8 rounded-xl border" type="email" name="email" autoComplete="off" onChange={(e)=>{handleChange(e)}} placeholder="Email" />
             <div className="relative">
-              <input className="p-2 rounded-xl border w-full" type="password" autoComplete="off" name="password" placeholder="Password" />
+              <input className="p-2 rounded-xl border w-full" type="password" autoComplete="off" name="password" placeholder="Password" onChange={(e)=>{handleChange(e)}} />
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" viewBox="0 0 16 16">
                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
                 <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
